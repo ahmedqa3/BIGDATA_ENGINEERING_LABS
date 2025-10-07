@@ -1,6 +1,22 @@
-# Big Data Engineering Labs
+# BIG DATA ENGINEERING – Lab 1  
+**Année universitaire : 2025-2026**  
+**Étudiant : Ahmed QAIS**
 
-Ce dépôt contient les travaux pratiques (TP) de Big Data Engineering utilisant Hadoop, MapReduce et les technologies Big Data.
+> Ce dépôt contient la réalisation du **Lab 1 : Programmation avec l’API HDFS et MapReduce**, dans le cadre du cours de **Big Data Engineering**.
+
+---
+
+## 🎯 Objectifs du TP
+
+- ✅ Manipuler les fichiers sur **HDFS** via l’**API Java Hadoop** :
+  - Lire les métadonnées d’un fichier (`HadoopFileStatus`)
+  - Lire le contenu d’un fichier (`ReadHDFS`)
+  - Écrire un nouveau fichier (`WriteHDFS`)
+- ✅ Implémenter le classique **WordCount** en **Java (MapReduce)**.
+- ✅ Réaliser le même traitement en **Python** avec **Hadoop Streaming**.
+- ✅ Versionner le code avec **Git/GitHub**.
+
+---
 
 ## Structure du projet
 
@@ -11,19 +27,6 @@ Ce dépôt contient les travaux pratiques (TP) de Big Data Engineering utilisant
 - `reducer.py` - Script Python pour la phase Reduce (Hadoop Streaming)
 - `alice.txt` - Fichier de test pour WordCount
 
-## Labs réalisés
-
-### Lab 1 : HDFS Operations
-- **HadoopFileStatus** : Affiche les informations d'un fichier HDFS
-- **ReadHDFS** : Lit le contenu d'un fichier HDFS
-- **WriteHDFS** : Crée un nouveau fichier sur HDFS
-
-### Lab 2 : MapReduce Java
-- **WordCount** : Implémentation MapReduce en Java pour compter les occurrences de mots
-
-### Lab 3 : MapReduce Python (Hadoop Streaming)
-- **mapper.py** : Script de mapping en Python
-- **reducer.py** : Script de réduction en Python
 
 ## Technologies utilisées
 
@@ -31,7 +34,7 @@ Ce dépôt contient les travaux pratiques (TP) de Big Data Engineering utilisant
 - Java 8
 - Python 3
 - Maven
-- Docker (pour l'environnement Hadoop)
+- Docker (pour l'environnement Hadoop avec cluster Hadoop : `hadoop-master`, `hadoop-slave1`, `hadoop-slave2`)
 
 ## Utilisation
 
@@ -56,4 +59,4 @@ hadoop jar hadoop-streaming-3.2.0.jar \
 
 ## Auteur
 
-Ahmed Qais (ahmedqa3)
+Ahmed QAIS
