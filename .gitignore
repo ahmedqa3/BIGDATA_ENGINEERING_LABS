@@ -1,0 +1,39 @@
+# Compiled class files
+*.class
+
+# JAR files (except those needed)
+*.jar
+!hadoop_lab/target/*.jar
+
+# Maven target directories
+target/
+*/target/
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Node modules
+node_modules/
