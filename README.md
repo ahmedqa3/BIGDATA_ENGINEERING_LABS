@@ -1,59 +1,24 @@
-# Big Data Engineering Labs
+# BIGDATA_ENGINEERING_LABS
 
-Ce dépôt contient les travaux pratiques (TP) de Big Data Engineering utilisant Hadoop, MapReduce et les technologies Big Data.
+Ce dépôt contient les travaux pratiques de Big Data Engineering (année 2025-2026). Ci‑dessous un bref résumé des trois labs présents dans le projet.
 
-## Structure du projet
+## Vue d'ensemble
 
-- `hadoop_lab/` - Projets Java Hadoop
-  - `src/main/java/edu/ensias/hadoop/hdfslab/` - Classes pour les opérations HDFS
-  - `src/main/java/edu/ensias/hadoop/mapreducelab/` - Classes MapReduce
-- `mapper.py` - Script Python pour la phase Map (Hadoop Streaming)
-- `reducer.py` - Script Python pour la phase Reduce (Hadoop Streaming)
-- `alice.txt` - Fichier de test pour WordCount
+- `lab0/` : mise en place de l'infrastructure Docker pour le cluster (un master et deux slaves). J'ai préparé un `docker-compose.yml` pour démarrer les nœuds et tester les montages de volumes partagés.
 
-## Labs réalisés
+- `hadoop_lab/` : labs 1 et 2 — travail avec Hadoop/HDFS et MapReduce. Le code Java et les exemples MapReduce sont placés sous ce dossier (src, pom.xml, exemples de jobs et utilitaires HDFS).
 
-### Lab 1 : HDFS Operations
-- **HadoopFileStatus** : Affiche les informations d'un fichier HDFS
-- **ReadHDFS** : Lit le contenu d'un fichier HDFS
-- **WriteHDFS** : Crée un nouveau fichier sur HDFS
 
-### Lab 2 : MapReduce Java
-- **WordCount** : Implémentation MapReduce en Java pour compter les occurrences de mots
+- `lab3_kafka/` : lab 3 — configuration et expérimentations Kafka. Contient :
+  - un module `kafka_lab` avec producteurs et consommateurs Java, une app Kafka Streams (WordCount), et des scripts/compose pour Kafka-UI;
+  - des instructions pour builder les JARs, les copier dans le volume partagé du conteneur `hadoop-master` et exécuter les tests (producer → topic → consumer);
+  - exemples de connect (file source / file sink) et la configuration pour lancer Kafka Connect en standalone.
 
-### Lab 3 : MapReduce Python (Hadoop Streaming)
-- **mapper.py** : Script de mapping en Python
-- **reducer.py** : Script de réduction en Python
+## Ce que j'ai fait (récit court)
 
-## Technologies utilisées
+J'ai d'abord installé et configuré l'environnement Docker (lab0) pour disposer d'un master capable d'héberger des composants distribués.
 
-- Apache Hadoop 3.2.0
-- Java 8
-- Python 3
-- Maven
-- Docker (pour l'environnement Hadoop)
+Le détails des autres lab est présenté sur les fichiers readme de chacun.
 
-## Utilisation
 
-### Compilation des projets Java
-```bash
-mvn clean package
-```
-
-### Exécution des jobs Hadoop
-```bash
-# WordCount Java
-hadoop jar WordCount.jar /user/root/input/file.txt /user/root/output/wordcount
-
-# WordCount Python (Hadoop Streaming)
-hadoop jar hadoop-streaming-3.2.0.jar \
-    -files mapper.py,reducer.py \
-    -mapper "python3 mapper.py" \
-    -reducer "python3 reducer.py" \
-    -input /user/root/input/file.txt \
-    -output /user/root/output/wordcount_python
-```
-
-## Auteur
-
-Ahmed Qais (ahmedqa3)
+Ahmed QAIS
