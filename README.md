@@ -1,26 +1,30 @@
 <<<<<<< HEAD
 # BIGDATA_ENGINEERING_LABS
 
-Ce dépôt contient les travaux pratiques de Big Data Engineering (année 2025-2026). Ci‑dessous un bref résumé des trois labs présents dans le projet.
+**Année universitaire : 2025-2026**  
+Ce dépôt contient les travaux pratiques du cours Big Data Engineering. Voici un résumé organisé des labos et éléments présents dans le projet.
 =======
 # BIG DATA ENGINEERING – Lab 1  
-**Année universitaire : 2025-2026**  
+1. Infrastructure Docker (lab0)
 **Étudiant : Ahmed QAIS**
 
-> Ce dépôt contient la réalisation du **Lab 1 : Programmation avec l’API HDFS et MapReduce**, dans le cadre du cours de **Big Data Engineering**.
+2. Hadoop / MapReduce (lab1 & lab2)
 
 ---
 
-## 🎯 Objectifs du TP
+3. Kafka (lab3)
 
 - ✅ Manipuler les fichiers sur **HDFS** via l’**API Java Hadoop** :
   - Lire les métadonnées d’un fichier (`HadoopFileStatus`)
   - Lire le contenu d’un fichier (`ReadHDFS`)
-  - Écrire un nouveau fichier (`WriteHDFS`)
+Un résumé se trouve sur les fichiers PDF et README du dossier du Lab.
+4. Hive (lab6)
 - ✅ Implémenter le classique **WordCount** en **Java (MapReduce)**.
 - ✅ Réaliser le même traitement en **Python** avec **Hadoop Streaming**.
 - ✅ Versionner le code avec **Git/GitHub**.
 
+---
+Auteur : Ahmed QAIS
 ---
 >>>>>>> 4e0dce7ec890cde44209dcbac98dcdd225227c6e
 ````markdown
@@ -49,6 +53,11 @@ Ce dépôt contient les travaux pratiques du cours Big Data Engineering. Voici u
   - Producteurs/consommateurs Java (`EventProducer`, `EventConsumer`), outils interactifs (`WordProducer`, `WordCountConsumer`).
   - Kafka Streams : `WordCountApp` (exemple stateful avec store local).
   - Kafka Connect examples (file source -> topic -> file sink) et compose pour Kafka‑UI.
+
+4. Hive (lab6)
+  - Installation et premières manipulations avec Apache Hive (HiveServer2 / Beeline).
+  - Scripts HiveQL fournis pour : création des tables, chargement des données et requêtes analytiques (lab6_hive/Creation.hql, Loading.hql, Queries.hql).
+  - Conçu pour une exécution rapide dans le conteneur `hiveserver2-standalone` (volume partagé `/shared_volume`).
 
 ## Prérequis
 

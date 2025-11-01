@@ -1,0 +1,31 @@
+hotel_id,nom,ville,etoiles
+1,Grand Hotel,Paris,5
+2,Beach Resort,Nice,4
+3,Mountain Lodge,Chamonix,3
+4,Budget Inn,Lyon,2
+5,Luxury Palace,Cannes,5
+6,Sea Breeze,Biarritz,4
+7,Country Retreat,Dijon,3
+8,Riverside Hotel,Strasbourg,4
+9,City Center Lodge,Marseille,3
+10,Eco Stay,Grenoble,2
+11,Hotel de Ville,Toulouse,5
+12,Forest Escape,Annecy,4
+13,Spa Paradise,Aix-en-Provence,5
+14,Villa Tranquille,Perpignan,3
+15,Lakeview Resort,Bordeaux,4
+16,Château Bellevue,Nantes,5
+17,Sunrise Inn,Montpellier,2
+18,Modern Suites,Nancy,3
+19,Horizon Hotel,Tours,4
+20,Cozy Cottage,Brest,3
+21,Winter Haven,Lille,3
+22,Golden Sands,La Rochelle,4
+23,Oceanic Hotel,Saint-Malo,5
+24,Hilltop Inn,Avignon,2
+25,Cloud Nine,Reims,5
+26,Urban Stay,Le Havre,3
+27,Heritage Hotel,Rennes,4
+28,Royal Retreat,Metz,5
+29,Springfield Inn,Angers,2
+30,Azure View,Ajaccio,4
