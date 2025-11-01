@@ -1,6 +1,8 @@
 ## Lab 6 — Apache Hive
 
 
+## le fichier "CR_QAIS_Ahmed_TP6_Hive.pdf" contient plus de details sur le TP.
+
 Pré-requis
 - Dossier de données hôte : C:\Users\ahmed\hadoop_project\hive_data
   (doit contenir clients.txt, hotels.txt, reservations.txt)
