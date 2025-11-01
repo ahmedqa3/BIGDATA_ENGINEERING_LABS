@@ -35,6 +35,12 @@ Un résumé se trouve sur les fichiers PDF et README du dossier du Lab
 
 Un résumé se trouve sur les fichiers PDF et README du dossier du Lab.
 
+4. Hive (lab6)
+  - Installation et premières manipulations avec Apache Hive (HiveServer2 / Beeline).
+  - Scripts HiveQL fournis pour : création des tables, chargement des données et requêtes analytiques (`lab6_hive/Creation.hql`, `lab6_hive/Loading.hql`, `lab6_hive/Queries.hql`).
+
+Un résumé se trouve sur les fichiers PDF et README du dossier du Lab.
+
 ---
 Auteur : Ahmed QAIS
 ---
