@@ -64,7 +64,7 @@ Note — multi-brokers
 - Pour un cluster multi-brokers, ajouter des fichiers `server-one.properties` / `server-two.properties` (ports 9093/9094), démarrer plusieurs brokers et créer un topic avec `--replication-factor 2`.
 
 Kafka-UI
-- `docker-compose.kafka-ui.yml` fournit un service `kafka-ui` (port hôte 8081) que vous pouvez lancer pour inspecter le cluster.
+- `docker-compose.yml` fournit un service `kafka-ui` (port hôte 8081) que vous pouvez lancer pour inspecter le cluster.
 
 Remarques
 - Le consommateur `WordCountConsumer` garde les compteurs en mémoire — ce n'est pas persistant.
