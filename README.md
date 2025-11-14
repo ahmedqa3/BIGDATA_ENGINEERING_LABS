@@ -1,119 +1,74 @@
-TP HBase — hbase-code (Lab 4)
+````markdown
+# BIGDATA_ENGINEERING_LABS
 
-Ahmed QAIS — TP4 HBase
+Ce dépôt contient les travaux pratiques de Big Data Engineering (année 2025-2026).
 
-Ce répertoire contient les sources et scripts pour le TP HBase / Spark : exemples Java, import de données via ImportTsv, et jobs Spark lisant la table `products`.
+## Informations générales
 
-Objectifs
-- Charger les données de `purchases2.txt` dans HDFS puis dans une table HBase `products`.
-- Explorer HBase (shell, filtres) et exécuter un job Spark qui lit `products` et calcule des métriques (count, somme des prix).
+- **Année universitaire :** 2025-2026
+- **Étudiant :** Ahmed QAIS
 
-Contenu du répertoire
-- `HelloHBase.java` : exemple Java standalone qui crée une table, insère et lit des enregistrements.
-- `HbaseSparkProcess.java` : exemple Spark (version simple) qui compte les enregistrements.
-- `HbaseSparkProcessSum.java` : (nouveau) job Spark qui lit `cf:price` et calcule la somme des prix.
+## Vue d'ensemble
 
-Prérequis
-- Docker Desktop (avec WSL2 si sous Windows) + `docker-compose` pour lancer le cluster (hadoop-master, hadoop-slave1, hadoop-slave2).
-- Le conteneur `hadoop-master` contient HDFS, YARN, HBase, ZooKeeper et Spark.
-- `purchases2.txt` doit se trouver dans le dossier partagé monté dans le conteneur (`/shared_volume`).
+- `lab0/` : infrastructure Docker pour un petit cluster (master + slaves) avec `docker-compose.yml` pour démarrer les nœuds et tester les montages de volumes partagés.
 
----
+- `hadoop_lab/` : labs 1 & 2  travaux sur Hadoop/HDFS et MapReduce. Contient les sources Java, les exemples MapReduce et des scripts pour exécution dans l'environnement Hadoop.
 
-Flux de travail A→Z (commandes à lancer dans le conteneur `hadoop-master`)
+- `lab3_kafka/` : lab 3  expérimentations Kafka. Contient le module `kafka_lab` avec producteurs/consommateurs Java, une app Kafka Streams (`WordCount`), des exemples Kafka Connect, et un `docker-compose.yml` pour KafkaUI.
 
-1) Préparer HDFS (copier le fichier)
+- `lab4_hbase/` : lab 4  HBase & Spark. Contient exemples Java pour HBase, scripts d'import (`ImportTsv`), et jobs Spark qui lisent la table `products`. Voir `lab4_hbase/hbase-code/README_AZ.md` (ou `README.md` dans `lab4_hbase/hbase-code`) et le PDF associé pour les détails.
 
-```bash
-hadoop fs -mkdir -p /user/root/input
-hadoop fs -put /shared_volume/purchases2.txt /user/root/input/
+- `lab6_hive/` : lab 6  scripts HiveQL pour création, chargement et requêtes analytiques (tests réalisés dans un conteneur `hiveserver2-standalone` avec volume partagé `/shared_volume`).
+
+## Ce que j'ai implémenté
+
+1. Infrastructure Docker (lab0)
+   - `docker-compose.yml` pour démarrer `hadoop-master` et deux slaves. Le master expose un volume partagé pour déposer des JARs et fichiers à utiliser par les services du conteneur.
+
+2. Hadoop / MapReduce (lab1 & lab2)
+   - Exemples Java : utilitaires HDFS (`HadoopFileStatus`, `ReadHDFS`, `WriteHDFS`) et job WordCount en Java.
+   - Exemple Python : mapper/reducer pour Hadoop Streaming.
+
+3. Kafka (lab3)
+   - Producteurs/consommateurs Java (`EventProducer`, `EventConsumer`), outils interactifs (`WordProducer`, `WordCountConsumer`).
+   - Kafka Streams : `WordCountApp` (exemple stateful avec store local).
+   - Kafka Connect examples (file source -> topic -> file sink) et compose pour KafkaUI.
+
+4. HBase (lab4)
+   - Exemples Java pour HBase (création de tables, puts/gets), scripts d'import via `ImportTsv` et jobs Spark qui lisent la table `products`.
+   - Activités : importer `purchases2.txt` dans HDFS, exécuter `ImportTsv` pour charger `products`, exécuter un job Spark pour compter / sommer les prix (`HbaseSparkProcessSum.java`).
+   - Détails et commandes : voir `lab4_hbase/hbase-code/README_AZ.md` et le PDF de rendu du TP.
+
+5. Hive (lab6)
+   - Installation et premières manipulations avec Apache Hive (HiveServer2 / Beeline).
+   - Scripts HiveQL fournis pour : création des tables, chargement des données et requêtes analytiques (`lab6_hive/Creation.hql`, `lab6_hive/Loading.hql`, `lab6_hive/Queries.hql`).
+
+## Prérequis
+
+- Apache Hadoop 3.x
+- Java 8 (JDK)
+- Maven
+- Docker (pour l'environnement avec `hadoop-master`, Kafka, Hive)
+
+## Commandes utiles
+
+### Compiler les projets Java
+```powershell
+cd lab3_kafka/kafka_lab
+mvn clean package -DskipTests
 ```
 
-2) Créer la table HBase `products`
+### Exécution des jobs Hadoop (exemples)
+```powershell
+# WordCount Java (exécution depuis le conteneur master)
+hadoop jar hadoop_lab/target/WordCount.jar /user/root/input/file.txt /user/root/output/wordcount
 
-```bash
-echo "create 'products','cf'" | hbase shell -n
-```
-
-3) Importer les données dans HBase (ImportTsv)
-
-```bash
-hbase org.apache.hadoop.hbase.mapreduce.ImportTsv \
-  -Dimporttsv.separator=',' \
-  -Dimporttsv.columns=HBASE_ROW_KEY,cf:date,cf:time,cf:town,cf:product,cf:price,cf:payment \
-  products /user/root/input/purchases2.txt
-```
-
-Notes :
-- Si ImportTsv échoue pour une classe manquante (ex. `ArrayUtils`), ajoutez le jar manquant via `-libjars` ou placez le jar dans le classpath du conteneur.
-
-4) Compiler et créer le jar Spark
-
-```bash
-cd /root/lab4_hbase/hbase-code
-mkdir -p out
-javac -cp "/usr/local/hbase/lib/*:/usr/local/spark/jars/*" -d out HbaseSparkProcessSum.java
-jar cvf processing-hbase-sum.jar -C out .
-jar tf processing-hbase-sum.jar | sed -n '1,200p'
-```
-
-5) Exécuter le job Spark
-
-Local (driver dans le conteneur) :
-
-```bash
-spark-submit --master local[4] --class HbaseSparkProcessSum processing-hbase-sum.jar --files /usr/local/hbase/conf/hbase-site.xml
-```
-
-Sur YARN (client mode) :
-
-```bash
-spark-submit --master yarn --deploy-mode client --class HbaseSparkProcessSum \
-  --files /usr/local/hbase/conf/hbase-site.xml \
-  --conf spark.eventLog.enabled=true \
-  --conf spark.eventLog.dir=file:///tmp/spark-logs \
-  processing-hbase-sum.jar
-```
-
-6) Vérifier les résultats
-
-- Compter directement depuis HBase :
-
-```bash
-echo "count 'products'" | hbase shell -n
-```
-
-- Vérifier la somme affichée par le job Spark dans la sortie `spark-submit` ou via les event logs (`/tmp/spark-logs`).
-
-7) Mettre à jour une cellule HBase (ex. row '8' cf:town)
-
-```bash
-echo "put 'products','8','cf:town','New york'" | hbase shell -n
-echo "get 'products','8'" | hbase shell -n
+# Hadoop Streaming (Python)
+hadoop jar /path/to/hadoop-streaming.jar -files mapper.py,reducer.py -mapper "python3 mapper.py" -reducer "python3 reducer.py" -input /user/root/input -output /user/root/output_python
 ```
 
 ---
-
-Dépannage et bonnes pratiques
-- Docker/WSL : si `docker exec` renvoie une erreur 500, redémarrer Docker Desktop / vérifier WSL2.
-- Classes manquantes : pour ImportTsv ou Spark, ajouter les jars manquants via `-libjars`, `--jars` ou `--files`.
-- Packaging : assurez-vous que le package Java correspond au `--class` passé à `spark-submit`.
-- Spark UI : voir `http://<driver-host>:4040` pendant l'exécution ; pour UIs persistantes, démarrer le Spark History Server et configurer `spark.eventLog.dir`.
-- HBase hbck : faites un backup avant d'exécuter `hbase hbck -fixMeta` ou `-fixAssignments`.
-
-Fichiers clés
-- `HbaseSparkProcessSum.java` — job Spark pour somme des `cf:price`.
-- `processing-hbase-sum.jar` — jar produit par `jar cvf`.
-- HBase logs : `/usr/local/hbase/logs`.
-- Event logs Spark : `/tmp/spark-logs` (si configuré).
-
-Activités avancées (optionnelles)
-- Somme `price * quantity` : adapter le mapping pour lire `cf:quantity` et multiplier.
-- Repackager les classes dans `package bigdata.hbase.tp` pour utiliser `--class bigdata.hbase.tp.YourClass`.
-- Démarrer Spark History Server : `/usr/local/spark/sbin/start-history-server.sh`.
-
+Auteur : Ahmed QAIS
 ---
 
-Si tu veux, je peux générer un script `build-and-run.sh` qui compile, crée le jar et lance `spark-submit` automatiquement, ou repackager les sources en ajoutant un package Java.
-
-Ahmed QAIS
+````
