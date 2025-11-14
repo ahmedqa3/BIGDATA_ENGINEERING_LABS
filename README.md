@@ -1,4 +1,3 @@
-````markdown
 # BIGDATA_ENGINEERING_LABS
 
 Ce dépôt contient les travaux pratiques de Big Data Engineering (année 2025-2026).
