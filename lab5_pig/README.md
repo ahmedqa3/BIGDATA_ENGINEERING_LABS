@@ -8,7 +8,7 @@ Important : ce fichier est une documentation — il ne lance rien automatiquemen
 
 ## 1. Résumé des objectifs
 
-- Préparer les fichiers (airports, carriers, flights, movies, users) dans HDFS.
+- Préparer les fichiers (airports, carriers, flights, movies, users, employees, deparments) dans HDFS.
 - Exécuter des analyses Pig sur :
   - Top 20 aéroports (entrants, sortants, totaux), par périodes (jour, mois, année)
   - Popularité des transporteurs (volume par année, classement)
@@ -21,7 +21,7 @@ Important : ce fichier est une documentation — il ne lance rien automatiquemen
 
 ## 2. Pré‑requis
 
-- Un conteneur `hadoop-master` en cours d'exécution (HDFS + YARN idéalement).
+- Un conteneur `hadoop-master` en cours d'exécution (HDFS).
 - Les fichiers sources copiés dans le volume partagé du conteneur (exemple : `/shared_volume`).
 - Accès shell au conteneur :
 
@@ -90,7 +90,9 @@ Remarque : remplacez `*.csv` par la liste des fichiers précis si vous ne voulez
 
 ## 5. Scripts Pig — exemples prêts à l'emploi
 
-Ci‑dessous les extraits Pig à coller dans un fichier `.pig` (ex : `/tmp/flights_analysis.pig`). Ils supposent que les fichiers sont sur HDFS sous `/user/root/input/shared_volume/`.
+Les scripts Pig à coller sont dans le dossier "scripts" pour les diffèrentes parties. Ils supposent que les fichiers sont sur HDFS sous `/user/root/input/shared_volume/`.
+
+### EXEMPLES : 
 
 ### 5.1 Chargement des données de vols (exemple schema adapté)
 
@@ -155,60 +157,6 @@ STORE CarrierLog INTO '/user/root/output/flight_analysis/carrier_log_volume' USI
 
 ---
 
-## 6. Commandes complètes — copy/paste dans le conteneur
-
-Bloc recommandé pour copier les fichiers, écrire un script Pig et le lancer (MapReduce) :
-
-```bash
-# 1) copier CSV vers HDFS
-hdfs dfs -mkdir -p /user/root/input/shared_volume
-hdfs dfs -put -f /shared_volume/*.csv /user/root/input/shared_volume/
-
-# 2) écrire le script Pig (ex : /tmp/flights_analysis.pig)
-cat > /tmp/flights_analysis.pig <<'PIG'
-# (collez ici le contenu Pig des sections 5.1 à 5.5)
-PIG
-
-# 3) supprimer d'anciennes sorties qui pourraient bloquer
-hdfs dfs -rm -r -f /user/root/output/flight_analysis
-
-# 4) exécuter Pig en mode cluster (MapReduce)
-HADOOP_OPTS='-Dyarn.timeline-service.enabled=false' pig -x mapreduce -f /tmp/flights_analysis.pig
-
-# 5) lister et inspecter
-hdfs dfs -ls -h /user/root/output/flight_analysis
-hdfs dfs -cat /user/root/output/flight_analysis/top20_airports/part-* | head -n 20
-```
-
-Si vous préférez exécuter en local (debug rapide) :
-
-```bash
-pig -x local -f /tmp/flights_analysis.pig
-ls -l /tmp/pig_output
-cat /tmp/pig_output/top20_airports/part-* | head -n 20
-```
-
----
-
-## 7. Résultats attendus & emplacement
-
-- Sorties Pig (HDFS) : `/user/root/output/flight_analysis/` contenant :
-  - `top20_airports/part-*`
-  - `top_routes/part-*`
-  - `delay_by_hour/part-*`, `delay_by_day/part-*`, etc.
-  - `carrier_log_volume/part-*`
-
-- Sorties Films (local / tmp) :
-  - `/tmp/pig_output/movies_per_year/part-*`
-  - `/tmp/pig_output/movies_per_genre/part-*`
-  - `/tmp/pig_output/movie_rating_stats/part-*`
-  - `/tmp/pig_output/top50_movies/part-*`
-  - `/user/root/output/mUSA_annee_flat.tsv` (si vous avez utilisé l'étape de flatten HDFS)
-
-Utilisez `hdfs dfs -cat <path>/part-* | head -n 40` pour inspecter les fichiers produits.
-
----
-
 ## 8. Problèmes courants & solutions
 
 - Erreur "Input path does not exist: hdfs://.../tmp/…" : cela arrive si votre script Pig est configuré pour MapReduce mais référence des chemins locaux (`/tmp/...`) — assurez‑vous d'utiliser des chemins HDFS pour MapReduce.
@@ -230,18 +178,4 @@ head -n 40 /tmp/movies_per_year.tsv
 
 ---
 
-## 10. Conseils d'exploitation
-
-- Testez d'abord en `pig -x local` pour valider la logique, puis passez en MapReduce (`pig -x mapreduce`) pour des gros volumes.
-- Pour les gros jeux (millions de lignes) utilisez Spark (script PySpark fourni sur demande) — plus résilient et performant.
-- Versionnez vos scripts Pig dans le repo `lab5_pig/` (ex : `flights_analysis.pig`, `movies_analysis.pig`, `wordcount.pig`).
-
----
-
-Si vous voulez, je peux maintenant :
-
-- Générer un fichier `/tmp/flights_analysis.pig` complet (je fournis le bloc entier prêt à coller).  
-- Générer un script PySpark complet (si vous préférez Spark).  
-- Ajouter des exemples concrets de sorties (extraits) si vous me donnez le contenu d'un `part-*` produit.
-
-Indiquez ce que vous souhaitez que je fournisse en priorité (script Pig complet pour les vols, script PySpark, ou uniquement commandes HDFS + vérification).
+Ahmed QAIS
