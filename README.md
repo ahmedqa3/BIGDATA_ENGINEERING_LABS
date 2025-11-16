@@ -54,13 +54,12 @@ Ce dépôt contient les travaux pratiques de Big Data Engineering (année 2025-2
 - Apache Hadoop 3.x
 - Java 8 (JDK)
 - Maven
-- Docker (pour l'environnement avec `hadoop-master`, Kafka, Hive)
+- Docker (pour l'environnement avec `hadoop-master`, Kafka, Hive, PIG, HBase)
 
 ## Commandes utiles
 
 ### Compiler les projets Java
 ```powershell
-cd lab3_kafka/kafka_lab
 mvn clean package -DskipTests
 ```
 
