@@ -1,0 +1,20 @@
+101,Informatique
+102,Marketing
+103,Ventes
+104,Ressources Humaines
+105,Finance
+106,Recherche et Développement
+107,Service Client
+108,Logistique
+109,Développement Produit
+110,Qualité
+111,IT Support
+112,Administration
+113,Communication
+114,Juridique
+115,Achats
+116,Stratégie
+117,Développement Commercial
+118,Analyse de Données
+119,Formation
+120,Sécurité Informatique
