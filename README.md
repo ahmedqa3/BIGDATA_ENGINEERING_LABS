@@ -41,7 +41,7 @@ Ce dépôt contient les travaux pratiques de Big Data Engineering (année 2025-2
    - Détails et commandes : voir `lab4_hbase/hbase-code/README_AZ.md` et le PDF de rendu du TP.
 
 5. Pig (lab5)
-   - Scripts Pig pour analyses (vols, films) : top aéroports, itinéraires, retards, stats par transporteur, films par année/genre et top50.
+   - Scripts Pig pour analyses (employés, vols, films) : top aéroports, itinéraires, retards, stats par transporteur, films par année/genre et top50.
    - Alternatives pratiques AWK/Python fournies pour exécution locale si MapReduce n'est pas disponible.
    - Détails et commandes reproductibles : voir `lab5_pig/README.md` et le PDF associé dans le dossier `lab5_pig/`.
 
