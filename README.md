@@ -17,6 +17,8 @@ Ce dépôt contient les travaux pratiques de Big Data Engineering (année 2025-2
 
 - `lab4_hbase/` : lab 4  HBase & Spark. Contient exemples Java pour HBase, scripts d'import (`ImportTsv`), et jobs Spark qui lisent la table `products`. Voir `lab4_hbase/hbase-code/README_AZ.md` (ou `README.md` dans `lab4_hbase/hbase-code`) et le PDF associé pour les détails.
 
+- `lab5_pig/` : lab 5 — Apache Pig. Contient des scripts Pig pour analyser des jeux de données (employés, vols, films), des alternatives AWK/Python et un `README` + PDF détaillant les exercices et résultats.
+- 
 - `lab6_hive/` : lab 6  scripts HiveQL pour création, chargement et requêtes analytiques (tests réalisés dans un conteneur `hiveserver2-standalone` avec volume partagé `/shared_volume`).
 
 ## Ce que j'ai implémenté
@@ -38,7 +40,12 @@ Ce dépôt contient les travaux pratiques de Big Data Engineering (année 2025-2
    - Activités : importer `purchases2.txt` dans HDFS, exécuter `ImportTsv` pour charger `products`, exécuter un job Spark pour compter / sommer les prix (`HbaseSparkProcessSum.java`).
    - Détails et commandes : voir `lab4_hbase/hbase-code/README_AZ.md` et le PDF de rendu du TP.
 
-5. Hive (lab6)
+5. Pig (lab5)
+   - Scripts Pig pour analyses (vols, films) : top aéroports, itinéraires, retards, stats par transporteur, films par année/genre et top50.
+   - Alternatives pratiques AWK/Python fournies pour exécution locale si MapReduce n'est pas disponible.
+   - Détails et commandes reproductibles : voir `lab5_pig/README.md` et le PDF associé dans le dossier `lab5_pig/`.
+
+6. Hive (lab6)
    - Installation et premières manipulations avec Apache Hive (HiveServer2 / Beeline).
    - Scripts HiveQL fournis pour : création des tables, chargement des données et requêtes analytiques (`lab6_hive/Creation.hql`, `lab6_hive/Loading.hql`, `lab6_hive/Queries.hql`).
 
