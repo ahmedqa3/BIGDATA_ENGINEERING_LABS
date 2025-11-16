@@ -1,4 +1,4 @@
-# TP 5 — Guide complet et Résultats (Pig / Vols / Films)
+# TP 5 — Guide complet et Résultats (Employés / Vols / Films)
 
 Ce document rassemble les instructions pratiques, les commandes « copy‑paste » à coller dans le conteneur `hadoop-master`, des exemples de scripts Pig et des conseils de dépannage. Il explique aussi où retrouver les résultats produits et propose des alternatives (AWK / Python) si le mode MapReduce pose problème.
 
@@ -179,3 +179,4 @@ head -n 40 /tmp/movies_per_year.tsv
 ---
 
 Ahmed QAIS
+
